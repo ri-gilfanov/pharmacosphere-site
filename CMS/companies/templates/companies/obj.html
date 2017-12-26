@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}{{ obj }} / Компании{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        {% include 'companies/obj_header.html' %}
+        {% include 'companies/obj_menu.html' %}
+        <table style="flex: 1 1 auto;">
+            <tr>
+                <th align="left">Фактический адрес:</th>
+                <td>{{ obj.actual_address }}</td>
+            </tr>
+            {% if obj.legal_address %}
+                <tr>
+                    <th align="left">Юридический адрес:</th>
+                    <td>{{ obj.legal_address }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th align="left">Количество сотрудников:</th>
+                <td>{{ obj.get_employees_number_display }}</td>
+            </tr>
+            <tr>
+                <th align="left">Сайт компании:</th>
+                <td>
+                    <a href="{{ obj.web_site }}" target="_blank">
+                        {{ obj.web_site }}
+                    </a>
+                </td>
+            </tr>
+            {% with obj.employees.all as employees %}
+                {% if employees %}
+                    <tr>
+                        <th align="left">Сотрудники на сайте:</th>
+                        <td>
+                            <ul class="ul__row">
+                                {% for user in employees %}
+                                    <li class="li__row">
+                                        <a href="{% url 'url_user_obj' user.pk %}">
+                                            <span class="fa fa-user"></span>
+                                            {{ user.get_reverse_initials }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endwith %}
+        </table>
+        <section>
+            {% if obj.text %}
+                <h2>О компании</h2>
+                {{ obj.text|safe }}
+            {% endif %}
+        </section>
+    </main>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}Публикации / {{ obj }} / Компании{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        {% include 'companies/obj_header.html' %}
+        {% include 'companies/obj_menu.html' %}
+        {% if obj_list %}
+            {% for obj in obj_list %}
+                {% include 'discounts/obj_preview.html' %}
+            {% endfor %}
+        {% else %}
+            <p>От лица компании не опубликовано ни одной акции.</p>
+        {% endif %}
+    </main>
+{% endblock %}

@@ -1,0 +1,11 @@
+Django==1.10.7
+pytz
+Pillow
+django-allauth
+django-ckeditor
+django-imagekit
+psycopg2
+django-debug-toolbar
+django-mptt
+django-filter
+django-nested-admin

@@ -1,0 +1,15 @@
+<article class="preview__std">
+    <h2>
+        <a href="{% url 'url_entry_obj' obj.pk %}">{{ obj }}</a>
+    </h2>
+    {% include 'entries/obj_tags.html' %}
+    {{ obj.text|safe|truncatewords_html:50 }}
+    <p class="right">
+        {% if user.is_staff or user.pk == obj.creator.pk %}
+            <a class="btn btn__std" href="{% url 'url_entry_edit' obj.pk %}" title="Изменить публикацию">
+                <span class="fa fa-pencil"></span>
+            </a>
+        {% endif %}
+        <a class="btn btn__std" href="{% url 'url_entry_obj' obj.pk %}">Читать далее</a>
+    </p>
+</article>

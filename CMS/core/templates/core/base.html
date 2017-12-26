@@ -1,0 +1,116 @@
+{% load admin_urls static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Руслан Ильясович Гильфанов (vk.com/ri_gilfanov)" lang="ru"/>
+    <meta name="yandex-verification" content="e304c264b61eac12" />
+    <link rel="stylesheet" type="text/css" href="{% static 'core/base.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'core/base__secondary_nav.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'core/common.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'core/mods.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'core/buttons.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'sliders/base.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}"/>
+    <script type="text/javascript" src="{% static '/jquery-3.1.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/jquery.sticky-kit.min.js' %}"></script>
+    <title>{% block page_title %}{% endblock %} // ФармакоСфера — всё о фармации ДНР и ЛНР</title>
+</head>
+{% spaceless %}
+<body>
+
+<!-- Yandex.Metrika counter -->
+    <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter45121557 = new Ya.Metrika({ id:45121557, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/45121557" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<div class="site_second_nav__wrapper">
+    <div class="site_second_nav__block">
+        <aside style="flex: 1 1 auto; display: flex; flex-wrap: wrap;">
+            
+        </aside>
+        <aside style="flex: 0 0 auto; display: flex; flex-wrap: wrap;">
+            <span style="display: block; padding: 5px;">Наши друзья:</span>
+            <a class="site_second_nav__a" href="http://александр-терентьев.рф/" target="_blank" title="юридическая компания «Терентьев и Партнёры»">Терентьев и Партнёры</a>
+            <a class="site_second_nav__a" href="https://ddc.world/" target="_blank" title="Центр Развития Донбасса">Центр Развития Донбасса</a>
+        </aside>
+    </div>
+</div>
+
+<div class="site_header__wrapper">
+    <div class="site_header__block">
+        <header class="site_header">
+            <a href="{% url 'url_main_page' %}"><img src="{% static 'core/logo.png' %}"></a>
+        </header>
+
+        <aside style="display: flex; flex-wrap: wrap; align-self: center;">
+            <aside class="site_auth">
+                <a class="site_auth__a {% if '/page_4/' == smmi %}a__sel{% endif %}" href="{% url 'url_company_contacts' 3 %}">
+                    <b>Контакты</b>
+                </a>
+            </aside>
+
+            <aside class="site_auth">
+                {% if user.is_authenticated %}
+                    <a class="site_auth__a" href="{% url 'url_user_obj' user.pk %}">Мой профиль</a>
+                    {% if user.is_staff %}
+                        <a class="site_auth__a" href="{% url 'admin:index' %}">Управление</a>
+                    {% endif %}
+                    <a class="site_auth__a" href="{% url 'url_log_out' %}">Выйти</a>
+                {% else %}
+                    <a class="site_auth__a" href="{% url 'url_log_in' %}">Войти</a>
+                {% endif %}
+            </aside>
+        </aside>
+
+        <aside class="top_banner__container">
+            {{ top_banner.code|safe }}
+        </aside>
+    </div>
+</div>
+
+{% include 'core/main_menu.html' %}
+
+{% with slider.slides.all as slides %}
+    {% if slides %}
+        {% include 'sliders/widget.html' %}
+    {% endif %}
+{% endwith %}
+
+<div class="site_main__wrapper">
+<div class="site_main__block" id="sidebar">
+    <aside class="side_banner__wrapper">
+        <div class="side_banner__container">
+            {{ left_banner.code|safe }}
+        </div>
+    </aside>
+    <div class="page_middle__container">
+        {% block page_content %}{% endblock %}
+        <footer class="site_footer__wrapper">
+            <address class="site_footer__address">
+                <p>&copy; 2017, <a href="https://vk.com/ri_gilfanov" target="_blank">Руслан Гильфанов</a> (web-разработка)</p>
+                <p>&copy; 2017, ООО «ФармакоСфера»</p>
+            </address>
+            <aside>
+                <!-- Yandex.Metrika informer -->
+                <a href="https://metrika.yandex.ru/stat/?id=45121557&amp;from=informer" target="_blank" rel="nofollow"><img src="https://informer.yandex.ru/informer/45121557/3_0_20A0E0FF_0080C0FF_0_uniques" style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" class="ym-advanced-informer" data-cid="45121557" data-lang="ru" /></a>
+                <!-- /Yandex.Metrika informer -->
+            </aside>
+        </footer>
+        <a id="page_up_down__button" href="#" class="btn btn__std btn__ghost" title="Наверх">
+            <span class="fa fa-arrow-up"></span> наверх
+        </a>
+        <script type="text/javascript" src="{% static '/core/page_up_down.js' %}"></script>
+    </div>
+    <aside class="side_banner__wrapper">
+        <div class="side_banner__container">
+            {{ right_banner.code|safe }}
+        </div>
+    </aside>
+    <script type="text/javascript" src="{% static '/banners/scrollable_sticky.js' %}"></script>
+</div>
+</div>
+
+</body>
+</html>
+{% endspaceless %}

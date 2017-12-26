@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+
+{% block page_title %}Акции{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <p><a href="{% url 'url_main_page' %}">Главная</a> /</p>
+        <header>
+            <h1>Акции</h1>
+        </header>
+        {% for obj in obj_list %}
+            {% include 'discounts/obj_preview.html' %}
+        {% endfor %}
+    </main>
+{% endblock %}

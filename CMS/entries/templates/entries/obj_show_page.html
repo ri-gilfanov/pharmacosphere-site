@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+
+{% block page_title %}{{ obj }} / Публикации{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <header>
+            <p><a href="{% url 'url_main_page' %}">Главная</a> / <a href="{% url 'entry_list' %}">Публикации</a> /</p>
+            <h1>{{ obj }}</h1>
+            {% include 'entries/obj_tags.html' %}
+            <p class="right">
+                {% if user.is_authenticated %}
+                    {% if user.is_staff or user.pk == obj.creator.pk %}
+                        <a class="btn btn__std" href="{% url 'url_entry_edit' obj.pk %}" title="Изменить публикацию">
+                            <span class="fa fa-pencil"></span> изменить публикацию</a>
+                    {% endif %}
+                {% endif %}
+            </p>
+        </header>
+        {{ obj.text|safe }}
+    </main>
+{% endblock %}

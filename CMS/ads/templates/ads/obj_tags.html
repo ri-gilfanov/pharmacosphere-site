@@ -1,0 +1,25 @@
+<ul class="font_small ul__row">
+    <li class="li__row">
+        <span class="fa fa-tag"></span>
+        {{ obj.get_category_display }}
+    </li>
+    {% if obj.company %}
+        <li class="li__row">
+            <a href="{% url 'url_company_ads' obj.company.pk %}">
+                <span class="fa fa-university"></span>
+                {{ obj.company }}
+            </a>
+        </li>
+    {% else %}
+        <li class="li__row">
+            <a href="{% url 'url_user_ads' obj.creator.pk %}">
+                <span class="fa fa-user"></span>
+                {{ obj.creator.get_reverse_initials }}
+            </a>
+        </li>
+    {% endif %}
+    <li class="li__row">
+        <span class="fa fa-clock-o"></span>
+        {{ obj.pub_date|timesince }} назад
+    </li>
+</ul>

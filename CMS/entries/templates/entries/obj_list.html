@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block page_title %}Публикации{% endblock %}
+
+{% block page_content %}
+    <style>
+        .dir_header {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .dir_path, .dir_h1 {
+            flex: 1 1 100%;
+        }
+        .dir_edition, .entry_filter {
+            flex: 1 1 auto;
+        }
+        #id_category {
+            border-radius: 5px;
+            border: 2px rgb(0,92,160) solid;
+            padding: 6px;
+            background: rgb(255,255,255);
+            color: #000;
+        }
+        #id_category option:active,
+        #id_category option:checked,
+        #id_category option:focus,
+        #id_category option:hover {
+            background: rgb(0,92,160);
+            box-shadow: 0 0 10px 100px #1882A8 inset;
+            color: #fff;
+        }
+        .entry_filter p {
+            margin: 0px;
+        }
+        .entry_filter p > * {
+            margin: 5px;
+        }
+    </style>
+    <main class="central_column">
+        <header class="dir_header">
+            <p class="dir_path"><a href="{% url 'url_main_page' %}">Главная</a> /</p>
+            <h1 class="dir_h1">Публикации</h1>
+            {% include 'core/paginator.html' %}
+            <form class="entry_filter" action="{% url 'entry_list' %}" method="get" style="display: flex; flex-wrap: wrap; width: 100%;">
+                {{ filter.form.as_p }}
+                <button class="btn btn__std fa fa-search" type="submit" value="найти"></button>
+            </form>
+            <aside class="dir_edition" style="justify-content: right; display: flex; flex-wrap: wrap;">
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                        <a class="btn btn__std" href="{% url 'url_entry_add' %}" title="Добавить публикацию"><span class="fa fa-plus"></span> публикацию</a>
+                    {% endif %}
+                    <a class="btn btn__std" href="{% url 'url_entry_draft_add' %}" title="Добавить черновик"><span class="fa fa-plus"></span> черновик</a>
+                    <a class="btn btn__std" href="{% url 'url_entry_draft_list' %}"><span class="fa fa-list"></span> черновики</a>
+                {% endif %}
+            </aside>
+        </header>
+        {% for obj in paginator_page %}
+            {% include 'entries/obj_show_preview.html' %}
+        {% endfor %}
+        <footer>{% include 'core/paginator.html' %}</footer>
+    </main>
+{% endblock %}

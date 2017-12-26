@@ -1,0 +1,23 @@
+
+
+.font_small {
+    font-size: 0.875em;
+}
+
+
+.font_red {
+    color: rgb(159,0,0);
+}
+
+
+.right {
+    text-align: right;
+}
+
+
+.center {
+    text-align: center;
+}
+.grey {
+    color: rgb(127,127,127);
+}

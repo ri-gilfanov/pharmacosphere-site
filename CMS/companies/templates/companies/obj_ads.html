@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}Объявления / {{ obj }} / Компании{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        {% include 'companies/obj_header.html' %}
+        {% include 'companies/obj_menu.html' %}
+        {% if paginator_page %}
+            {% include 'core/obj_dir_pagination.html' %}
+            {% for obj in paginator_page %}
+                {% include 'ads/obj_show_preview.html' %}
+            {% endfor %}
+            {% include 'core/obj_dir_pagination.html' %}
+        {% else %}
+            <p>От лица компании не опубликовано ни одного объявления.</p>
+        {% endif %}
+    </main>
+{% endblock %}

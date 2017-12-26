@@ -1,0 +1,71 @@
+{% load static %}
+
+
+<div class="slider_site__wrapper">
+    <div class="slider_site__block">
+        <div class="container">
+            <div id="slides">
+                {% for slide in slides %}
+                    <a
+                        href="{{ slide.url_link }}"
+                        class="site_slider__slide"
+                        style="background-color: {{slide.background_color}}; background-image: url('{{slide.image.url}}')"
+                        {% if slide.new_tab %}target="_blank"{% endif %}
+                    >
+                        <img src="{{slide.image.url}}">
+                    </a>
+                {% endfor %}
+                <a class="slidesjs-previous slidesjs-navigation" href="#" title="Следующий">
+                    <span class="fa fa-chevron-left"></span>
+                </a>
+                <a class="slidesjs-next slidesjs-navigation" href="#" title="Следующий">
+                    <span class="fa fa-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'sliders/jquery.slides.min.js'%}"></script>
+<script>
+    $(function() {
+      $('#slides').slidesjs({
+        width: 1920,
+        height: 300,
+        navigation: {
+          active: false,
+            // [boolean] Generates next and previous buttons.
+            // You can set to false and use your own buttons.
+            // User defined buttons must have the following:
+            // previous button: class="slidesjs-previous slidesjs-navigation"
+            // next button: class="slidesjs-next slidesjs-navigation"
+          effect: "slide"
+            // [string] Can be either "slide" or "fade".
+        },
+        play: {
+          active: true,
+          auto: true,
+          interval: 8000,
+          pauseOnHover: true,
+          swap: true
+        },
+        effect: {
+            slide: {
+            // Slide effect settings.
+            speed: 1500
+              // [number] Speed in milliseconds of the slide animation.
+            },
+            fade: {
+            speed: 300,
+              // [number] Speed in milliseconds of the fade animation.
+            crossfade: true
+              // [boolean] Cross-fade the transition.
+            }
+        }
+      });
+    });
+    $( document ).ready(function() {
+        $(".slidesjs-play").html('<span class="fa fa-play"></span>');
+        $(".slidesjs-stop").html('<span class="fa fa-pause"></span>');
+        $(".site_slider__slide").css({"display": "block"});
+    });
+</script>

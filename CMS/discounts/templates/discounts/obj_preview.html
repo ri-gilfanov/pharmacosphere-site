@@ -1,0 +1,11 @@
+<article class="preview__std">
+    <a name="акция_{{ obj.pk }}"></a>
+    <h1>
+        Акция компании
+        <a href="{% url 'url_company_discounts' obj.company.pk %}">
+            {{ obj.company }}
+        </a><br/>
+        (с {{ obj.start }} по {{ obj.end }})
+    </h1>
+    {{ obj.text|safe }}
+</article>

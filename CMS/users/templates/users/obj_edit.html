@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}Редактирование профиля /{{ obj.get_full_name }} / Персоны{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        {% include 'users/obj_header.html' %}
+        {% include 'users/obj_menu.html' %}
+        <h2>Редактирование профиля</h2>
+        <form action="{% url 'url_user_profile_edit' %}" class="form__std" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p class="right">
+                <input class="btn btn__std" type="submit" value="Изменить профить" />
+            </p>
+        </form>
+    </main>
+{% endblock %}

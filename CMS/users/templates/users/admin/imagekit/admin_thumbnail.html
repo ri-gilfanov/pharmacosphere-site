@@ -1,0 +1,9 @@
+{% load admin_urls static %}
+
+{% if thumbnail %}
+    <img src="{{ thumbnail.url }}"
+        style="width: 50px; height: 50px;">
+{% else %}
+    <img src="{% static 'users/default_avatar.png' %}"
+        style="width: 50px; height: 50px;">
+{% endif %}

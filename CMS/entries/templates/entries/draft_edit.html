@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}Изменить черновик публикации / Публикации{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+        <p>
+            <a href="{% url 'url_main_page' %}">Главная</a> /
+            <a href="{% url 'entry_list' %}">Публикации</a> /
+            <a href="{% url 'url_entry_draft_list' %}">Черновики публикаций</a> /
+        </p>
+        <h1>Изменить черновик публикации</h1>
+        <form action="{% url 'url_entry_draft_edit' obj.pk %}" class="form__std" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p class="right">
+                <input
+                    class="btn btn__std"
+                    type="submit"
+                    {% if user.is_staff %}
+                        value="Изменить публикацию"
+                    {% else %}
+                        value="Изменить черновик"
+                    {% endif %}
+                />
+            </p>
+        </form>
+    </main>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}Компании{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <p><a href="{% url 'url_main_page' %}">Главная</a> /</p>
+        <header>
+            <h1>Компании</h1>
+        </header>
+        {% include 'core/paginator.html' %}
+        {% for obj in paginator_page %}
+            <h2>
+                <a href="{% url 'url_company_obj' obj.pk %}">
+                    {% if obj.image %}
+                        <img src="{{ obj.image_50x50.url }}"
+                            style="width: 50px; height: 50px; vertical-align: bottom;">
+                    {% else %}
+                        <div style="display: inline-block; width: 50px; text-align: center; vertical-align: bottom;">
+                            <span class="fa fa-2x fa-university"></span>
+                        </div>
+                    {% endif %}
+                    {{ obj }}
+                </a>
+            </h2>
+        {% endfor %}
+        {% include 'core/paginator.html' %}
+    </main>
+{% endblock %}

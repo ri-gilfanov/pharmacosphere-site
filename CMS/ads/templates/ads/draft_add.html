@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}Добавить черновик объявления / Черновики объявлений /Объявления{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+        <p>
+            <a href="{% url 'url_main_page' %}">Главная</a> /
+            <a href="{% url 'url_ad_list' %}">Объявления</a> /
+            <a href="{% url 'url_ad_draft_list' %}">Черновики объявлений</a> /
+        </p>
+        <h1>Добавить черновик объявления</h1>
+        <form action="{% url 'url_ad_draft_add' %}" class="form__std" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p class="right">
+                <input
+                    class="btn btn__std"
+                    type="submit"
+                    {% if user.is_staff %}
+                        value="Добавить публикацию"
+                    {% else %}
+                        value="Добавить черновик"
+                    {% endif %}
+                />
+            </p>
+        </form>
+    </main>
+{% endblock %}

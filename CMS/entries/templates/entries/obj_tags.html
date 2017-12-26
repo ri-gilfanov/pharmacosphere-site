@@ -1,0 +1,19 @@
+<ul class="ul__row font_small">
+    <li class="li__row">
+        <a href="{% url 'entry_list' %}?category={{ obj.category.pk }}">
+            <span class="fa fa-tag"></span> {{ obj.category }}</a>
+    </li>
+    {% if obj.company %}
+        <li class="li__row">
+            <a href="{% url 'url_company_entries' obj.company.pk %}">
+                <span class="fa fa-university"></span> {{ obj.company }}</a>
+        </li>
+    {% endif %}
+    {% if obj.is_anonymously is False %}
+        <li class="li__row">
+            <a href="{% url 'url_user_entries' obj.creator.pk %}">
+                <span class="fa fa-user"></span> {{ obj.creator.get_reverse_initials }}</a>
+        </li>
+    {% endif %}
+    <li class="li__row" style="color: rgb(64,64,64);"><span class="fa fa-calendar"></span> {{ obj.pub_date }}</li>
+</ul>

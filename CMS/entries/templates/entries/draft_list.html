@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block page_title %}Черновики публикаций{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <header class="dir_header">
+            <p class="dir_path">
+                <a href="{% url 'url_main_page' %}">Главная</a> /
+            </p>
+            <h1 class="dir_h1">Черновики публикаций</h1>
+            {% include 'core/paginator.html' %}
+            <aside class="dir_edition right">
+                {% if user.is_authenticated %}
+                    <a class="btn btn__std" href="{% url 'url_entry_draft_add' %}" title="Добавить черновик"><span class="fa fa-plus"></span> черновик</a>
+                {% endif %}
+            </aside>
+        </header>
+        {% for obj in paginator_page %}
+            <h2>
+                {{ obj.pub_date }}
+                <a href="{% url 'url_entry_draft_edit' obj.pk %}">
+                    {{ obj }}
+                </a>
+            </h2>
+        {% endfor %}
+        <footer>{% include 'core/paginator.html' %}</footer>
+    </main>
+{% endblock %}

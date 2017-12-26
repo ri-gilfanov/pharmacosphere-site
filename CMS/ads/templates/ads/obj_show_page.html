@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}{{ obj }} / Объявления{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <header>
+            <p>
+                <a href="{% url 'url_main_page' %}">Главная</a> /
+                <a href="{% url 'url_ad_list' %}">Объявления</a> /
+            </p>
+            <h1>{{ obj }}</h1>
+            {% include 'ads/obj_tags.html' %}
+            <p class="right">
+                {% if user.is_authenticated %}
+                    {% if user.is_staff or user.pk == obj.creator.pk %}
+                        <a class="btn btn__std" href="{% url 'url_ad_edit' obj.pk %}" title="Изменить объявление">
+                            <span class="fa fa-pencil"></span> изменить объявление</a>
+                    {% endif %}
+                {% endif %}
+            </p>
+        </header>
+        {{ obj.text|safe }}
+    </main>
+{% endblock %}

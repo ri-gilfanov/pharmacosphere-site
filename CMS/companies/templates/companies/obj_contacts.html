@@ -1,0 +1,89 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}{{ obj }} / Компании{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        {% include 'companies/obj_header.html' %}
+        {% include 'companies/obj_menu.html' %}
+        <h2>Контакты</h2>
+            {% if obj.actual_address %}
+                <p>Фактический адрес: {{ obj.actual_address }}</p>
+            {% endif %}
+            {% if obj.legal_address %}
+                <p>Юридический адрес: {{ obj.legal_address }}</p>
+            {% endif %}
+            {% if obj.web_site %}
+                <p>Сайт компании:
+                    <a href="{{ obj.web_site }}" target="_blank">
+                        {{ obj.web_site }}
+                    </a>
+                </p>
+            {% endif %}
+            {% for contact in obj.contacts.iterator %}
+                <section>
+                    <ul style="list-style: none; padding: 0px;">
+                        <li>
+                            {% if contact.description %}
+                                <h5>{{ contact.description }}</h5>
+                            {% endif %}
+                            <ul style="list-style: none;">
+                                {% if contact.phone %}
+                                    <li>
+                                        <span class="fa fa-phone"></span>
+                                        {{ contact.phone }}
+                                    </li>
+                                {% endif %}
+                                {% if user.is_authenticated and contact.email %}
+                                    <li>
+                                        <span class="fa fa-envelope-o"></span>
+                                        <a href="mailto:{{ contact.email }}">
+                                            {{ contact.email }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% if contact.address %}
+                                    <li>
+                                        <span class="fa fa-map-marker"></span>
+                                        {{ contact.address }}
+                                    </li>
+                                {% endif %}
+
+                                {% if contact.pubphone_set.all %}
+                                    <li>
+                                        <span>Телефоны:</span>
+                                        <ul style="list-style: none;">
+                                            {% for phone in contact.pubphone_set.all %}
+                                                <li>
+                                                    <span class="fa fa-phone"></span>
+                                                    {{ phone.description }}
+                                                    {{ phone.phone }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+
+
+                                {% if contact.pubemail_set.all %}
+                                    <li>
+                                        <span>Электронная почта:</span>
+                                        <ul style="list-style: none;">
+                                            {% for email in contact.pubemail_set.all %}
+                                                <li>
+                                                    <span class="fa fa-envelope-o"></span>
+                                                    {{ email.email }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+            {% endfor %}
+        </p>
+    </main>
+{% endblock %}

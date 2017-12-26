@@ -1,0 +1,148 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block page_title %}Главная страница{% endblock %}
+
+{% block page_content %}
+    <div class="main_page_widgets__wrapper">
+            <div class="main_page_widgets__block">
+            <aside>
+                <h1 class="main_page_widgets__h1">
+                    <a href="{% url 'entry_list' %}">Новые публикации</a>
+                </h1>
+                <ul class="main_page_widgets__ul">
+                    {% for obj in entries_list_widget %}
+                        <li class="main_page_widgets__wrapper__li">
+                            <span style="color: rgb(64,64,64);">{{ obj.pub_date|date:"D G:i" }}</span>
+                            </br>
+                            <a href="{% url 'url_entry_obj' obj.pk %}">{{ obj.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </aside>
+            <aside class="preview__std">
+                <h1 class="main_page_widgets__h1">
+                    <a href="{% url 'discount_list'%}">Акции</a>
+                </h1>
+                <ul class="main_page_widgets__ul">
+                    {% for obj in discounts_list_widget %}
+                        <li class="main_page_widgets__wrapper__li">
+                            <a href="{% url 'discount_list'%}#акция_{{ obj.pk }}">
+                                {{ obj.company__name }}<br/>
+                                (с {{ obj.start|date:'d.m.Y' }}
+                                по {{ obj.end|date:'d.m.Y' }})
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </aside>
+            <aside class="preview__std">
+                <h1 class="main_page_widgets__h1">
+                    <a href="{% url 'url_ad_list'%}">Объявления</a>
+                </h1>
+                <ul class="main_page_widgets__ul">
+                    {% for obj in ads_list_widget %}
+                        <li class="main_page_widgets__wrapper__li">
+                            <span style="color: rgb(64,64,64);">{{ obj.pub_date|timesince }} назад</span>
+                            </br>
+                            <a href="{% url 'url_ad_obj' obj.pk %}">{{ obj.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </aside>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static '/pages/scrollable_sticky.js' %}"></script>
+    <style>
+        .chosen_entries__block {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 10px;
+        }
+        .chosen_entries__block article {
+            padding-top: 10px;
+        }
+    </style>
+    <div class="chosen_entries">
+        <header>
+            <h1>Избранные публикации</h1>
+        </header>
+        <style>
+            .chosen__div {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-self: center;
+                margin: 0 auto;
+                overflow: hidden;
+                height: 300px;
+                background-position: center center;
+                background-size: cover;
+            }
+            .chosen__img {
+                display: block;
+                position: relative;
+                z-index: 2;
+            }
+            .chosen__a {
+                display: flex;
+                z-index: 3;
+                position: absolute;
+                bottom: -0px;
+                left: -0px;
+                min-width: 100%;
+                padding: 10px;
+                height: 90%;
+                flex-direction: column;
+            }
+            .chosen__a, .chosen__a:link, .chosen__a:visited {
+                color: #fff;
+                transition: 0.3s;
+                padding: 10px;
+            }
+            .chosen__a:active, .chosen__a:focus, .chosen__a:hover {
+                color: #fff;
+                transition: 0.3s;
+            }
+            .chosen__a, .chosen__a:link, .chosen__a:visited {
+                background: linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.45));
+                text-shadow: 1px 1px 3px #000;
+            }
+            .chosen__a:active, .chosen__a:focus, .chosen__a:hover {
+                background: linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.9));
+            }
+            .chosen__h3 {
+                bottom: -0px;
+                position: absolute;
+                color: #fff;
+            }
+            .chosen__span {
+                display: block;
+                z-index: 2;
+                position: absolute;
+                top: -1px;
+            }
+        </style>
+        <div class="chosen_entries__block">
+        {% for obj in chosen_entries %}
+        <article class="preview__std">
+            {% if obj.image %}
+                <div class="chosen__div" style="background-image: url({{ obj.image.url }});">
+                    <a class="chosen__a" href="{% url 'url_entry_obj' obj.pk %}">
+                        <h3 class="chosen__h3">{{ obj.title }}</h3>
+                    </a>
+                </div>
+                {% include 'entries/obj_tags.html' %}
+            {% else %}
+                <div class="chosen__div">
+                    <h3>
+                        <a class="chosen__a__x" href="{% url 'url_entry_obj' obj.pk %}">{{ obj.title }}</a>
+                    </h3>
+                </div>
+                {% include 'entries/obj_tags.html' %}
+            {% endif %}
+        </article>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+{% load socialaccount %}
+
+{% block page_title %}Вход на сайт в качестве авторизованного пользователя{% endblock %}
+
+{% block page_content %}
+    <div class="central_column">
+        <p><a href="{% url 'url_main_page' %}">Главная</a> /</p>
+        <h1>Вход на сайт в качестве авторизованного пользователя</h1>
+        {% for message in messages %}
+            <div {% if message.tags %}class="{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
+        {% endfor %}
+        <form action="{% url 'url_log_in'%}" method="POST">
+            {% csrf_token %}
+            {{ auth_form }}
+            <input class="btn btn__std" type="submit" value="войти">
+        </form>
+        <h2>Вход на сайт через сторонние службы</h2>
+        <ul class="ul__row">
+            <li class="li__row">
+                <a class="fa fa-3x fa-vk"
+                    href="{% provider_login_url 'vk' %}"
+                    title="ВКонтакте">
+                </a>
+            </li>
+            <li class="li__row">
+                <span class="fa fa-3x fa-odnoklassniki"
+                    href="{% provider_login_url 'vk' %}"
+                    title="Одноклассники">
+                </span>
+            </li>
+            <li class="li__row">
+                <span class="fa fa-3x fa-facebook"
+                    href="{% provider_login_url 'vk' %}"
+                    title="Facebook">
+                </span>
+            </li>
+            <li class="li__row">
+                <span class="fa fa-3x fa-twitter"
+                    href="{% provider_login_url 'vk' %}"
+                    title="Twitter">
+                </span>
+            </li>
+            <li class="li__row">
+                <span class="fa fa-3x fa-instagram"
+                    href="{% provider_login_url 'vk' %}"
+                    title="Instagram">
+                </span>
+            </li>
+            <li class="li__row">
+                <span class="fa fa-3x fa-google"
+                    href="{% provider_login_url 'vk' %}"
+                    title="Google">
+                </span>
+            </li>
+            <li class="li__row">
+                <span class="fa fa-3x fa-linkedin"
+                    href="{% provider_login_url 'vk' %}"
+                    title="LinkedIn">
+                </span>
+            </li>
+            <li class="li__row">
+                <span class="fa fa-3x fa-amazon"
+                    href="{% provider_login_url 'vk' %}"
+                    title="Amazon">
+                </span>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

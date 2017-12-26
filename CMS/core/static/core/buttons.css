@@ -1,0 +1,49 @@
+.btn,
+.btn:link,
+.btn:visited {
+    background-color: rgb(0,128,192);
+    border: none;
+    color: rgba(255,255,255,1.0);
+    display: inline-block;
+    font-family: Verdana;
+    font-size: 1em;
+    outline: none;
+    padding: 10px;
+}
+.btn:active,
+.btn:focus,
+.btn:hover {
+    color: rgba(255,255,255,1.0);
+    background-color: rgb(0,92,160);
+}
+.btn::-moz-focus-inner {
+    border: 0px;
+    padding: 0px;
+}
+.btn__sel,
+.btn__sel:link,
+.btn__sel:visited,
+.btn__sel:active,
+.btn__sel:focus,
+.btn__sel:hover {
+    background-color: rgb(0,92,160);
+}
+
+.btn__std {
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.btn__ghost,
+.btn__ghost:link,
+.btn__ghost:visited,
+.btn__ghost:focus {
+    background-color: rgba(0,128,192,0.5);
+    transition: 0.3s;
+}
+.btn__ghost:active,
+.btn__ghost:hover {
+    background-color: rgba(0,92,160,1.0);
+    transition: 0.3s;
+}
+}

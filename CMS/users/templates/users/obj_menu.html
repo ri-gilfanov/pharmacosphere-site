@@ -1,0 +1,11 @@
+<nav class="site_primary_nav__block">
+    <a class="btn{% if select_profile_item == 'profile' %} btn__sel{% endif %}"
+        href="{% url 'url_user_obj' obj.pk %}"
+    >Профиль</a>
+    <a class="btn{% if select_profile_item == 'entries' %} btn__sel{% endif %}"
+        href="{% url 'url_user_entries' obj.pk %}"
+    >Публикации</a>
+    <a class="btn{% if select_profile_item == 'ads' %} btn__sel{% endif %}"
+        href="{% url 'url_user_ads' obj.pk %}"
+    >Объявления</a>
+</nav>

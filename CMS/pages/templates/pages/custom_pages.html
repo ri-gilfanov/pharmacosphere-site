@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+
+{% load mptt_tags %}
+
+{% block page_title %}{{ obj.title }}{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <p>
+            <a href="{% url 'url_main_page' %}">Главная</a> /
+            {% for c in obj.get_ancestors.all %}
+                <a href="{% url 'custom_page' c.pk %}">{{ c.title }}</a> /
+            {% endfor %}
+        </p>
+        <h1>{{ obj.title }}</h1>
+        {{ obj.text|safe }}
+        {% if descendants %}
+            <ul>
+                {% recursetree descendants %}
+                    <li>
+                        <a href="{% url 'custom_page' node.pk %}">{{ node }}</a>
+                        {% if not node.is_leaf_node %}
+                            <ul class="children">
+                                {{ children }}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endrecursetree %}
+            </ul>
+        {% endif %}
+        {% if obj_list %}
+            {% for obj in obj_list %}
+            <div class="preview__std">
+                <h2><a href="{% url 'custom_page' obj.pk %}">{{ obj }}</a></h2>
+                {{ obj.text|safe|truncatewords_html:50 }}
+                <p class="right">
+                    <a class="btn btn__std"
+                        href="{% url 'custom_page' obj.pk %}"
+                        title="Перейти"
+                    >Перейти</a>
+                </p>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </main>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}Добавить публикацию / Публикации{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+        <p>
+            <a href="{% url 'url_main_page' %}">Главная</a> /
+            <a href="{% url 'entry_list' %}">Публикации</a> /
+        </p>
+        <h1>Добавить публикацию</h1>
+        <form action="{% url 'url_entry_add' %}" class="form__std" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p class="right">
+                <input class="btn btn__std" type="submit" value="Добавить публикацию" />
+            </p>
+        </form>
+    </main>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+
+{% block page_title %}Объявления{% endblock %}
+
+{% block page_content %}
+    <style>
+        .dir_header {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .dir_path, .dir_h1 {
+            flex: 1 1 100%;
+        }
+        .dir_edition {
+            flex: 1 1 auto;
+        }
+    </style>
+    <main class="central_column">
+        <header class="dir_header">
+            <p class="dir_path"><a href="{% url 'url_main_page' %}">Главная</a> /</p>
+            <h1 class="dir_h1">Объявления</h1>
+            {% include 'core/paginator.html' %}
+            <aside class="dir_edition right">
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                        <a class="btn btn__std" href="{% url 'url_ad_add' %}" title="Добавить объявление"><span class="fa fa-plus"></span> объявление</a>
+                    {% endif %}
+                    <a class="btn btn__std" href="{% url 'url_ad_draft_add' %}" title="Добавить черновик"><span class="fa fa-plus"></span> черновик</a>
+                    <a class="btn btn__std" href="{% url 'url_ad_draft_list' %}"><span class="fa fa-list"></span> черновики</a>
+                {% endif %}
+            </aside>
+        </header>
+        {% for obj in paginator_page %}
+            {% include 'ads/obj_show_preview.html' %}
+        {% endfor %}
+        {% include 'core/paginator.html' %}
+    </main>
+{% endblock %}

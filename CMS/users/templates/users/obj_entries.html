@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}Публикации / {{ obj.get_full_name }} / Персоны{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        {% include 'users/obj_header.html' %}
+        {% include 'users/obj_menu.html' %}
+        {% if paginator_page %}
+            {% include 'core/obj_dir_pagination.html' %}
+            {% for obj in paginator_page %}
+                {% include 'entries/obj_show_preview.html' %}
+            {% endfor %}
+            {% include 'core/obj_dir_pagination.html' %}
+        {% else %}
+            <p>Пользователем не опубликовано ни одной публикации или публикации анонимны.</p>
+        {% endif %}
+    </main>
+{% endblock %}

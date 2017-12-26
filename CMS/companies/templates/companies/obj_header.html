@@ -1,0 +1,19 @@
+{% load admin_urls static %}
+
+<header>
+    <p>
+        <a href="{% url 'url_main_page' %}">Главная</a> /
+        <a href="{% url 'company_list' %}">Компании</a> /
+    </p>
+    <h1>
+        {% if obj.image %}
+            <img src="{{ obj.image_50x50.url }}"
+                style="width: 50px; height: 50px;">
+        {% else %}
+            <div style="display: inline-block; width: 50px; text-align: center; vertical-align: bottom;">
+                <span class="fa fa-2x fa-university"></span>
+            </div>
+        {% endif %}
+        {{ obj }}
+    </h1>
+</header>

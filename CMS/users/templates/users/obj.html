@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+{% load admin_urls static %}
+
+{% block page_title %}Профиль / {{ obj.get_full_name }} / Персоны{% endblock %}
+
+{% block page_content %}
+    <main class="central_column">
+        <header>
+        {% include 'users/obj_header.html' %}
+        {% include 'users/obj_menu.html' %}
+        <h2>Профиль</h2>
+        {% if user.pk == obj.pk %}
+            <p class="right">
+                <a class="btn btn__std" href="{% url 'url_user_profile_edit' %}">Редактировать</a>
+            </p>
+        {% endif %}
+        <table>
+            {% if obj.birth_date %}
+                <tr>
+                    <th align="left">Дата рождения:</th>
+                    <td>{{ obj.birth_date }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th align="left">Дата регистрации:</th>
+                <td>{{ obj.date_joined }}</td>
+            </tr>
+            {% with obj.employment.all as comanies %}
+                {% if comanies %}
+                    <tr>
+                        <th align="left">Компании:</th>
+                        <td>
+                            <ul class="ul__row">
+                                {% for company in comanies %}
+                                    <li class="li__row">
+                                        <a href="{% url 'url_company_obj' company.pk %}">
+                                            <span class="fa fa-university"></span> {{ company }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endwith %}
+        </table>
+        {% if obj.text %}
+            {{ obj.text|safe }}
+        {% endif %}
+    </main>
+{% endblock %}

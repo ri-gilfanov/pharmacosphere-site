@@ -1,0 +1,14 @@
+<article class="preview__std">
+    <h2>
+        <a href="{% url 'url_ad_obj' obj.pk %}">
+            {{ obj }}
+        </a>
+    </h2>
+    {% include 'ads/obj_tags.html' %}
+    {% if user.is_staff or user.pk == obj.creator.pk %}
+    <p class="right">
+        <a class="btn btn__std" href="{% url 'url_ad_edit' obj.pk %}" title="Изменить объявление"><span class="fa fa-pencil"></span></a>
+        <a class="btn btn__std" href="{% url 'url_ad_obj' obj.pk %}">Подробнее</a>
+    </p>
+    {% endif %}
+</article>

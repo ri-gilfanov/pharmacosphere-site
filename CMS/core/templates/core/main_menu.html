@@ -1,0 +1,172 @@
+{% load mptt_tags %}
+
+<style>
+.site_primary_nav__block ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+.site_primary_nav__block__topmenu > li {
+  float: left;
+  position: relative;
+  margin: 0px;
+}
+.site_primary_nav__block__topmenu > li:first-child {border-left: 0;}
+.site_primary_nav__block__topmenu > li > a {  
+  padding: 13px !important;
+}
+.site_primary_nav__block__submenu {
+  position: absolute;
+  z-index: 20;
+  max-width: 320px;
+  min-width: 100%;
+  background: rgb(63, 95, 159);
+  visibility: hidden;
+  opacity: 0; 
+  transform-origin: 0% 0%;
+  transform: rotateX(-90deg);
+  transition: 0.3s;
+  font-size: 13px;
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+}
+.site_primary_nav__block__submenu .site_primary_nav__block__submenu {
+  transform: rotateY(-90deg);
+  transition: 0.3s;
+}
+.site_primary_nav__block__submenu li {
+    position: relative;
+    margin: 0px;
+}
+.site_primary_nav__block__topmenu li a,
+.site_primary_nav__block__submenu li a {
+    display: flex !important;
+}
+.site_primary_nav__block__submenu li a {
+  max-width: 100%;
+  display:flex;
+  align-items: center;
+  padding-right: 15px;
+  font-weight: normal;
+}
+.site_primary_nav__block__submenu li a .span__text {
+  flex: 1 1 auto;
+}
+.site_primary_nav__block__submenu li a .span__icon {
+    margin-left: auto;
+    flex: 0 0 auto;
+}
+.site_primary_nav__block__submenu .site_primary_nav__block__submenu {
+  position: absolute;
+  left: 100%;
+  top: -1px;
+  transition: 0.3s;
+}
+.site_primary_nav__block li:hover > .site_primary_nav__block__submenu {
+  transform: rotateX(0deg);
+  visibility: visible;
+  transition: 0.3s;
+  opacity: 1;
+}
+
+</style>
+
+<nav class="site_primary_nav__wrapper">
+<div class="site_primary_nav__block">
+    <ul class="site_primary_nav__block__topmenu">
+        <li>
+            {% with select_main_menu_item as smmi %}
+            <a class="btn {% if '/' == smmi %}btn__sel{% endif %}" href="{% url 'url_main_page' %}">Главная</a>
+            {% endwith %}
+        </li>
+        <li>
+            {% with select_main_menu_item as smmi %}
+            <a class="btn {% if '/entries/' == smmi %}btn__sel{% endif %}" href="{% url 'entry_list' %}">
+                <span class="span__text">Публикации</span>
+                <span>&nbsp;</span>
+                <span class="fa fa-angle-down span__icon"></span>
+            </a>
+            {% endwith %}
+            <ul class="site_primary_nav__block__submenu">
+                {% recursetree entries__categories %}
+                    <li>
+                        <a class="btn" href="{% url 'entry_list' %}?category={{ node.pk }}">
+                            <span class="span__text">{{ node.name }}</span>
+                            {% if not node.is_leaf_node %}
+                                <span>&nbsp;</span>
+                                <span class="fa fa-angle-right span__icon"></span>
+                            {% endif %}
+                        </a>
+                        {% if not node.is_leaf_node %}
+                            <ul  class="site_primary_nav__block__submenu">
+                                {{ children }}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endrecursetree %}
+            </ul>
+        </li>
+        {% with select_main_menu_item as smmi %}
+        <li>
+            <a class="btn {% if '/discounts/' == smmi %}btn__sel{% endif %}" href="{% url 'discount_list' %}">Акции</a>
+        </li>
+        <li>
+            <a class="btn {% if '/ads/' == smmi %}btn__sel{% endif %}" href="{% url 'url_ad_list' %}">Объявления</a>
+        </li>
+        <li>
+            <a class="btn {% if '/companies/' == smmi %}btn__sel{% endif %}" href="{% url 'company_list' %}">Компании</a>
+        </li>
+        <li>
+            <a class="btn {% if '/persons/' == smmi %}btn__sel{% endif %}" href="{% url 'user_list' %}">Персоны</a>
+        </li>
+        <li>
+            <span style="display: block; color: #fff; padding: 13px;">
+                <span>Форум</span>
+            </span>
+        </li>
+        <li>
+            <span style="display: block; color: #fff; padding: 13px;">
+                <span>Опросы</span>
+            </span>
+        </li>
+        <li>
+            <a class="btn {% if '/page_2/' == smmi %}btn__sel{% endif %}" href="{% url 'custom_page' 2 %}">
+                <span class="span__text">Нормативы</span>
+                <span>&nbsp;</span>
+                <span class="fa fa-angle-down span__icon"></span>
+            </a>
+            <ul class="site_primary_nav__block__submenu">
+                <li>
+                    <a class="btn" href="{% url 'custom_page' 5 %}">
+                        <span class="span__text">Нормативы ДНР</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="btn" href="{% url 'custom_page' 6 %}">
+                        <span class="span__text">Нормативы ЛНР</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="btn {% if '/page_3/' == smmi %}btn__sel{% endif %}" href="{% url 'custom_page' 3 %}">
+                <span class="span__text">Услуги</span>
+                <span>&nbsp;</span>
+                <span class="fa fa-angle-down span__icon"></span>
+            </a>
+            <ul class="site_primary_nav__block__submenu">
+                <li>
+                    <a class="btn" href="{% url 'custom_page' 7 %}">
+                        <span class="span__text">Онлайн</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="btn" href="{% url 'custom_page' 8 %}">
+                        <span class="span__text">Оффлайн</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        {% endwith %}
+    </ul>
+</div>
+</nav>

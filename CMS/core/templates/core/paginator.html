@@ -1,0 +1,23 @@
+{% if paginator_page.has_other_pages %}
+    <nav class="paginator__nav">
+        {% if paginator_page.number > paginator_start_link %}
+            <a class="btn btn__std"
+                href="{% url url_paginator_page paginator_range|first %}{{ GET_parameters }}">«</a>
+        {% endif %}
+        {% for page in paginator_range %}
+            {% if paginator_start < page and page < paginator_end %}
+                <a class="btn btn__std{% if page == paginator_page.number %} btn__sel{% endif %}"
+                {% if page != 1 %}
+                    href="{% url url_paginator_page page %}{{ GET_parameters }}"
+                {% else %}
+                    href="{% url url_paginator_page %}{{ GET_parameters }}"
+                {% endif %}
+                >{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if paginator_page.number < paginator_end_link %}
+            <a class="btn btn__std"
+                href="{% url url_paginator_page paginator_range|last %}{{ GET_parameters }}">»</a> 
+        {% endif %}
+    </nav>
+{% endif %}

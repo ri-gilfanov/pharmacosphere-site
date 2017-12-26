@@ -1,0 +1,15 @@
+*.pyc
+*.geany
+bin/
+include/
+lib/
+lib64
+share/
+phsph.sock
+phsph_uwsgi.log
+pip-selfcheck.json
+pyvenv.cfg
+CMS/db.sqlite3
+CMS/settings/secret.py
+CMS/assets/
+CMS/uploads/
